@@ -3,14 +3,9 @@ import axios from "axios";
 import CovidPieChart from "./CovidPieChart";
 import CovidLineChart from "./CovidLineChat";
 import StateCardList from "./CovidStateCardList";
-
-interface StateData {
-  state: string;
-  confirmed: number;
-  active: number;
-  recovered: number;
-  deaths: number;
-}
+import { StateData } from "../types/StateData";
+import { fetchCovidData } from "../services/api";
+import StateSelector from "./StateSelector";
 
 const CovidStats: React.FC = () => {
   const [covidData, setCovidData] = useState<StateData[]>([]);
@@ -19,22 +14,10 @@ const CovidStats: React.FC = () => {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const fetchCovidData = async () => {
+    const fetchData = async () => {
       try {
-        const response = await axios.get(
-          "https://api.rootnet.in/covid19-in/stats/latest"
-        );
-        const regionalData = response.data.data.regional;
-
-        const formattedData = regionalData.map((item: any) => ({
-          state: item.loc,
-          confirmed: item.totalConfirmed,
-          active: item.totalConfirmed - item.discharged - item.deaths,
-          recovered: item.discharged,
-          deaths: item.deaths,
-        }));
-
-        setCovidData(formattedData);
+        const data = await fetchCovidData();
+        setCovidData(data);
         setLoading(false);
       } catch (err) {
         console.error(err);
@@ -42,7 +25,7 @@ const CovidStats: React.FC = () => {
         setLoading(false);
       }
     };
-    fetchCovidData();
+    fetchData();
   }, []);
 
   const handleStateChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -75,24 +58,11 @@ const CovidStats: React.FC = () => {
 
   return (
     <div className="container">
-      <div className="text-center mb-4">
-        <label htmlFor="stateSelect" className="form-label">
-          Select State:
-        </label>
-        <select
-          id="stateSelect"
-          className="form-select"
-          onChange={handleStateChange}
-          value={selectedState}
-        >
-          <option value="All">All States</option>
-          {covidData.map((state, index) => (
-            <option key={index} value={state.state}>
-              {state.state}
-            </option>
-          ))}
-        </select>
-      </div>
+      <StateSelector
+        states={covidData.map((state) => state.state)}
+        selectedState={selectedState}
+        onStateChange={handleStateChange}
+      />
 
       {filteredData && filteredData.length > 0 ? (
         <div>
@@ -106,7 +76,6 @@ const CovidStats: React.FC = () => {
           />
           
           <CovidLineChart data={filteredData} selectedState={selectedState} />
-
         </div>
       ) : (
         <div className="text-center">No data available for the selected state.</div>
