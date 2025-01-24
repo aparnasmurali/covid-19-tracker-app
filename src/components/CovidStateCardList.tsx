@@ -1,12 +1,5 @@
 import React from "react";
-
-interface StateData {
-  state: string;
-  confirmed: number;
-  active: number;
-  recovered: number;
-  deaths: number;
-}
+import { StateData } from "../types/StateData";
 
 interface StateCardListProps {
   data: StateData[];

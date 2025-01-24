@@ -1,16 +1,6 @@
 import React from "react";
 import Plot from "react-plotly.js";
-
-interface LineChartProps {
-  data: {
-    state: string;
-    confirmed: number;
-    active: number;
-    recovered: number;
-    deaths: number;
-  }[];
-  selectedState: string;
-}
+import { LineChartProps } from "../types/StateData";
 
 const CovidLineChart: React.FC<LineChartProps> = ({ data, selectedState }) => {
   const states = data.map((item) => item.state);

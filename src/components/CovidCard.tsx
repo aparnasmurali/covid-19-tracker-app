@@ -1,9 +1,5 @@
 import React from "react";
-
-interface CovidCardProps {
-  title: string;
-  value: number | undefined;
-}
+import { CovidCardProps } from "../types/StateData";
 
 const CovidCard: React.FC<CovidCardProps> = ({ title, value }) => {
   const displayValue = value !== undefined ? value.toLocaleString() : "Loading...";

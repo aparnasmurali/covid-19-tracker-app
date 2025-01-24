@@ -1,10 +1,5 @@
 import React from "react";
-
-interface StateSelectorProps {
-  states: string[];
-  selectedState: string;
-  onStateChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-}
+import { StateSelectorProps } from "../types/StateData";
 
 const StateSelector: React.FC<StateSelectorProps> = ({ states, selectedState, onStateChange }) => {
   return (

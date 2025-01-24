@@ -1,12 +1,6 @@
 import React from "react";
 import Plot from "react-plotly.js";
-
-interface PieChartProps {
-  totalActive: number;
-  totalRecovered: number;
-  totalDeaths: number;
-  selectedState: string;
-}
+import { PieChartProps } from "../types/StateData";
 
 const CovidPieChart: React.FC<PieChartProps> = ({
   totalActive,
