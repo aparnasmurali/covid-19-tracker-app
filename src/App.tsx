@@ -1,7 +1,7 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Header from "./components/Header";
-import CovidStats from "./components/Covidstats";
+import CovidStats from "./components/CovidStats";
 
 const App: React.FC = () => {
   return (

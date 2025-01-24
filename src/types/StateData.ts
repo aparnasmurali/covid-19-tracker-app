@@ -4,7 +4,5 @@ export interface StateData {
     active: number;
     recovered: number;
     deaths: number;
-    latitude: number;
-    longitude: number;
   }
   

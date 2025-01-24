@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import CovidPieChart from "./CovidPieChart";
 import CovidLineChart from "./CovidLineChat";
 import StateCardList from "./CovidStateCardList";
@@ -63,19 +62,16 @@ const CovidStats: React.FC = () => {
         selectedState={selectedState}
         onStateChange={handleStateChange}
       />
-
       {filteredData && filteredData.length > 0 ? (
         <div>
           <StateCardList data={filteredData} />
-
           <CovidPieChart
             totalActive={totalActive}
             totalRecovered={totalRecovered}
             totalDeaths={totalDeaths}
             selectedState={selectedState}
           />
-          
-          <CovidLineChart data={filteredData} selectedState={selectedState} />
+          <CovidLineChart data={filteredData} selectedState={selectedState} />  
         </div>
       ) : (
         <div className="text-center">No data available for the selected state.</div>
